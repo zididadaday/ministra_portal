@@ -30,7 +30,7 @@ RUN echo date.timezone="UTC" > /usr/local/etc/php/conf.d/timezone.ini
 # Unpack, install
 ADD ./src/ministra-5.6.9.zip /tmp/ministra-5.6.9.zip
 RUN unzip /tmp/ministra-5.6.9.zip
-RUN mv /tmp/stalker_portal/ /var/www/html/stalker_portal/
+RUN mv stalker_portal /var/www/html/stalker_portal/
 RUN rm /tmp/ministra-5.6.9.zip
 
 # Install and configure apache cloudflare module
@@ -44,7 +44,7 @@ RUN a2enmod rewrite
 # Install PHING
 RUN pear channel-discover pear.phing.info 
 # RUN pear upgrade-all
-RUN pear install --alldeps phing/phing
+RUN pear install --alldeps phing/phing-2.15.2   # Phing V2.16.4 has an issue with PHP7.0 and PHP7.1
 
 # Copy custom.ini, build.xml.
 ADD ./ministra_portal/ /var/www/html/stalker_portal
@@ -54,9 +54,9 @@ RUN mkdir /tmp/ioncube_install
 WORKDIR /tmp/ioncube_install
 RUN wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -O /tmp/ioncube_install/ioncube_loaders_lin_x86-64.tar.gz
 RUN tar zxf /tmp/ioncube_install/ioncube_loaders_lin_x86-64.tar.gz
-RUN mv /tmp/ioncube_install/ioncube/ioncube_loader_lin_5.6.so /usr/local/lib/php/extensions/no-debug-non-zts-20131226/
+RUN mv /tmp/ioncube_install/ioncube/ioncube_loader_lin_7.0.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012/
 RUN rm -rf /tmp/ioncube_install
-RUN echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20131226/ioncube_loader_lin_5.6.so" >> /usr/local/etc/php/conf.d/00-ioncube.ini
+RUN echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20151012/ioncube_loader_lin_7.0.so" >> /usr/local/etc/php/conf.d/00-ioncube.ini
 
 # Deploy stalker
 RUN cd /var/www/html/stalker_portal/deploy/ && phing
