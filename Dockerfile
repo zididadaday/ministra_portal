@@ -58,6 +58,10 @@ RUN mv /tmp/ioncube_install/ioncube/ioncube_loader_lin_7.0.so /usr/local/lib/php
 RUN rm -rf /tmp/ioncube_install
 RUN echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20151012/ioncube_loader_lin_7.0.so" >> /usr/local/etc/php/conf.d/00-ioncube.ini
 
+# Fix Smart Launcher Applications
+RUN mkdir /var/www/html/.npm
+RUN chmod 777 /var/www/html/.npm
+
 # Deploy stalker
 RUN cd /var/www/html/stalker_portal/deploy/ && phing
 
