@@ -34,9 +34,9 @@ RUN mv /tmp/stalker_portal/ /var/www/html/stalker_portal/
 RUN rm /tmp/ministra-5.6.9.zip
 
 # Install and configure apache cloudflare module
-RUN wget https://www.cloudflare.com/static/misc/mod_cloudflare/ubuntu/mod_cloudflare-trusty-amd64.latest.deb -O /tmp/mod_cloudflare-trusty-amd64.latest.deb
-RUN dpkg -i /tmp/mod_cloudflare-trusty-amd64.latest.deb
-RUN sed -i -e 's/CloudFlareRemoteIPTrustedProxy/CloudFlareRemoteIPTrustedProxy 172.16.0.0\/12 192.168.0.0\/16 10.0.0.0\/8/' /etc/apache2/mods-enabled/cloudflare.conf
+# RUN wget https://www.cloudflare.com/static/misc/mod_cloudflare/ubuntu/mod_cloudflare-trusty-amd64.latest.deb -O /tmp/mod_cloudflare-trusty-amd64.latest.deb
+# RUN dpkg -i /tmp/mod_cloudflare-trusty-amd64.latest.deb
+# RUN sed -i -e 's/CloudFlareRemoteIPTrustedProxy/CloudFlareRemoteIPTrustedProxy 172.16.0.0\/12 192.168.0.0\/16 10.0.0.0\/8/' /etc/apache2/mods-enabled/cloudflare.conf
 
 # Enable Rewrite
 RUN a2enmod rewrite
