@@ -7,7 +7,7 @@ WORKDIR /
 # Prepare
 RUN apt-get update
 RUN apt-get dist-upgrade -y
-RUN apt-get install -y -u apt-utils unzip mysql-client nodejs upstart wget curl cron
+RUN apt-get install -y -u apt-utils unzip mysql-client nodejs systemd-sysv wget curl cron
 
 # Missing devel packages for the PHP modules installation
 RUN apt-get install -y icu-devtools libxml2-dev
