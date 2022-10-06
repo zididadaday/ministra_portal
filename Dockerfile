@@ -1,4 +1,5 @@
-FROM php:5-apache
+# ministra 5.6.9 should work with PHP7, changing this line from 5-apache to 7.0-apache
+FROM php:7.0-apache
 
 ADD ./etc/ /etc/
 WORKDIR /
