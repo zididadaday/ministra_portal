@@ -1,2 +1,3 @@
-# stalker_portal
-Dockerized stalker_portal IPTV middleware
+# ministra_portal
+Dockerized ministra_portal IPTV middleware (previously stalker_portal)
+
