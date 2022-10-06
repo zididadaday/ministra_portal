@@ -30,7 +30,7 @@ RUN echo date.timezone="UTC" > /usr/local/etc/php/conf.d/timezone.ini
 # Unpack, install
 ADD ./src/ministra-5.6.9.zip /tmp/ministra-5.6.9.zip
 RUN unzip /tmp/ministra-5.6.9.zip
-RUN mv infomirgroup-stalker_portal-9e60f9025ab6 /var/www/html/ministra_portal/
+RUN mv /tmp/stalker_portal/ /var/www/html/stalker_portal/
 RUN rm /tmp/ministra-5.6.9.zip
 
 # Install and configure apache cloudflare module
@@ -47,7 +47,7 @@ RUN pear channel-discover pear.phing.info
 RUN pear install --alldeps phing/phing
 
 # Copy custom.ini, build.xml.
-ADD ./ministra_portal/ /var/www/html/ministra_portal
+ADD ./ministra_portal/ /var/www/html/stalker_portal
 
 # Add IonCube Loaders
 RUN mkdir /tmp/ioncube_install
@@ -59,7 +59,7 @@ RUN rm -rf /tmp/ioncube_install
 RUN echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20131226/ioncube_loader_lin_5.6.so" >> /usr/local/etc/php/conf.d/00-ioncube.ini
 
 # Deploy stalker
-RUN cd /var/www/html/ministra_portal/deploy/ && phing
+RUN cd /var/www/html/stalker_portal/deploy/ && phing
 
 # Finish installing broken packages
 RUN apt-get install -f -y
