@@ -6,6 +6,9 @@ WORKDIR /
 
 # Prepare
 RUN apt-get update
+RUN apt-get install software-properties-common
+RUN add-apt-repository ppa:ondrej/php
+RUN apt-get update
 RUN apt-get dist-upgrade -y
 RUN apt-get install -y -u apt-utils unzip mysql-client nodejs systemd-sysv wget curl cron
 
@@ -13,6 +16,9 @@ RUN apt-get install -y -u apt-utils unzip mysql-client nodejs systemd-sysv wget 
 RUN apt-get install -y icu-devtools libxml2-dev
 RUN apt-get install -y libcurl4-nss-dev libtidy-dev
 RUN apt-get install -y libpng-dev libicu-dev
+RUN apt-get install -y libpng-dev libicu-dev
+# Ministra 5.6.9
+RUN apt-get install -y php7.0-imagick
 
 # Install PHP modules
 RUN docker-php-ext-install mysqli
@@ -23,9 +29,12 @@ RUN docker-php-ext-install curl
 RUN docker-php-ext-install tidy
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install pdo_mysql
+# additional PHP modules for Ministra 5.6.9
+RUN docker-php-ext-install exif
+RUN docker-php-ext-install zip
 
 # Set PHP time zone
-RUN echo date.timezone="UTC" > /usr/local/etc/php/conf.d/timezone.ini 
+RUN echo date.timezone="CET" > /usr/local/etc/php/conf.d/timezone.ini 
 
 # Unpack, install
 ADD ./src/ministra-5.6.9.zip /tmp/ministra-5.6.9.zip
@@ -64,7 +73,9 @@ RUN chmod 777 /var/www/html/.npm
 
 # Deploy stalker
 RUN cd /var/www/html/stalker_portal/deploy/ && phing
-RUN cd /var/www/html/stalker_portal/deploy/ && php /var/www/html/stalker_portal/deploy/composer/composer.phar install
+RUN php -r "echo ini_get('memory_limit').PHP_EOL;"
+# Composer.phar needs more than 1GB of RAM in PHP so we add the memory_limit commandline for this composer execution
+RUN cd /var/www/html/stalker_portal/deploy/ && php -d memory_limit=-1 /var/www/html/stalker_portal/deploy/composer/composer.phar install
 
 # Finish installing broken packages
 RUN apt-get install -f -y
