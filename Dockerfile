@@ -64,6 +64,7 @@ RUN chmod 777 /var/www/html/.npm
 
 # Deploy stalker
 RUN cd /var/www/html/stalker_portal/deploy/ && phing
+RUN cd /var/www/html/stalker_portal/deploy/ && php /var/www/html/stalker_portal/deploy/composer/composer.phar install
 
 # Finish installing broken packages
 RUN apt-get install -f -y
