@@ -2,8 +2,6 @@
 Dockerized ministra_portal IPTV middleware (previously stalker_portal)
 
 # requirements
-running version of mysql with known password, user and ip (to connect)
-when the compose.phar part runs you might run out of memory in php
 
 # to build the Docker
 Fetch the github repository
